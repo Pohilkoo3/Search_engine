@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+<!--        <Console name="Console" target="SYSTEM_OUT">-->
+<!--            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+<!--        </Console>-->
+        <File name="StaticAttribute" fileName="Parsing_Lenta/logs/staticWriterAttr.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="ListNods" fileName="Parsing_Lenta/logs/Nods_write.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+<!--        <File name="Errors" fileName="ImageResizer/logs/errors.log">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+<!--        </File>-->
+    </appenders>
+
+    <loggers>
+        <Logger name= "StaticAttribute" level="info" >
+            <AppenderRef ref="StaticAttribute"/>
+        </Logger>
+
+<!--        <Logger name= "WriteFiles" level="info" >-->
+<!--            <AppenderRef ref="FilesWrite"/>-->
+<!--        </Logger>-->
+        <Logger name= "LoggerNods" level="info" >
+            <AppenderRef ref="ListNods"/>
+        </Logger>
+
+        <root level="debug">
+            <appender-ref ref="Console" level="info"/>
+        </root>
+    </loggers>
+</configuration>
