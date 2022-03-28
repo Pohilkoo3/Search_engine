@@ -4,10 +4,10 @@
 <!--        <Console name="Console" target="SYSTEM_OUT">-->
 <!--            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
 <!--        </Console>-->
-        <File name="StaticAttribute" fileName="Parsing_Lenta/logs/staticWriterAttr.log">
+        <File name="StaticAttribute" fileName="Parsing_source/logs/staticWriterAttr.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
-        <File name="ListNods" fileName="Parsing_Lenta/logs/Nods_write.log">
+        <File name="ListNods" fileName="Parsing_source/logs/Nods_write.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
 <!--        <File name="Errors" fileName="ImageResizer/logs/errors.log">-->

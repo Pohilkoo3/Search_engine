@@ -12,7 +12,7 @@ public class Page
     private String path;
     @Column(nullable = false)
     private int code;
-    @Column(name = "medium_text", length = 1111111, nullable = true)
+    @Column(name = "medium_text", length = 1111111, nullable = false)
     private String mediumText;
 
     public Page() {
@@ -20,6 +20,11 @@ public class Page
 
     public String getPath() {
         return path;
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public void setPath(String path) {
