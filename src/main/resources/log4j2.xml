@@ -10,6 +10,12 @@
         <File name="ListNods" fileName="Parsing_source/logs/Nods_write.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
+        <File name="NewNode" fileName="Parsing_source/logs/newNode.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="NodeNot200" fileName="Parsing_source/logs/NodeNot200.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
 <!--        <File name="Errors" fileName="ImageResizer/logs/errors.log">-->
 <!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
 <!--        </File>-->
@@ -19,10 +25,12 @@
         <Logger name= "StaticAttribute" level="info" >
             <AppenderRef ref="StaticAttribute"/>
         </Logger>
-
-<!--        <Logger name= "WriteFiles" level="info" >-->
-<!--            <AppenderRef ref="FilesWrite"/>-->
-<!--        </Logger>-->
+        <Logger name= "NodeNot200" level="info" >
+            <AppenderRef ref="NodeNot200"/>
+        </Logger>
+        <Logger name= "NewNode" level="info" >
+            <AppenderRef ref="NewNode"/>
+        </Logger>
         <Logger name= "LoggerNods" level="info" >
             <AppenderRef ref="ListNods"/>
         </Logger>
