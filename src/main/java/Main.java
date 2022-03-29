@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ForkJoinPool;
 
 public class Main
 {
@@ -22,38 +23,42 @@ public class Main
 
 
     public static void main(String[] args) {
-
+        Node.setPathToRootPage(PATH_TO_ROOT_PAGE);
+//        Node node = new Node(PATH_TO_ROOT_PAGE);
+//        HandlerDoc.fillField();
+       new ForkJoinPool().invoke(new GetAllRefers(PATH_TO_ROOT_PAGE));
 //       HandlerDoc.changeLemmas("метро", 25);
-//       System.exit(-1);
-        HandlerDoc.fillField();
 
-//        Lemmatizator.getInfoAboutWord("ее").forEach(System.out::println);
-
-        try {
-        makeChildren(PATH_TO_ROOT_PAGE);//TODO пишем то что хотим проверить
-    } catch (Exception exception){
-        exception.printStackTrace();
-    }
+//        System.exit(-1);
+//
+////        Lemmatizator.getInfoAboutWord("ее").forEach(System.out::println);
+//
+//        try {
+//        makeChildren(PATH_TO_ROOT_PAGE);//TODO пишем то что хотим проверить
+//    } catch (Exception exception){
+//        exception.printStackTrace();
+//    }
 
     }
 
     private static void makeChildren (String path) throws IOException {
-        Document doc = Jsoup.connect(path).maxBodySize(0).get();
+//        Document doc = Jsoup.connect(path).maxBodySize(0).get();
 
-//            Document doc = Jsoup.connect(path)
-//                    .data("query", "Java")
-//                    .userAgent("Mozilla")
-//                    .cookie("auth", "token")
-//                    .timeout(3000)
-//                    .maxBodySize(0)
-//                    .get();
+            Document doc = Jsoup.connect(path)
+                    .data("query", "Java")
+                    .userAgent("Chrome")
+                    .cookie("auth", "token")
+                    .timeout(3000)
+                    .maxBodySize(0)
+                    .get();
 
         int responseStatus = doc.connection().response().statusCode();
         if (responseStatus != 200){//TODO записать страницу код ответа, но не вытаскивать из дока больше ничего
             return;
         }
-        HandlerDoc handlerDoc = new HandlerDoc(doc);
-        handlerDoc.createPage();
+        responseStatus = doc.connection().response().statusCode();
+        HandlerDoc handlerDoc = new HandlerDoc(doc, responseStatus);
+//        handlerDoc.createPage();
         staticAttribute.info("create new page for doc → " + doc.location());
 
 

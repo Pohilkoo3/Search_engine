@@ -1,5 +1,7 @@
 import javax.persistence.*;
 import javax.swing.text.html.HTML;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Entity
 @Table(name = "page")
 public class Page
