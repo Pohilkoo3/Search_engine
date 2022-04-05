@@ -1,3 +1,5 @@
+package indexWeb.models;
+
 import javax.persistence.*;
 
 @Entity

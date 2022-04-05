@@ -1,13 +1,14 @@
-import net.bytebuddy.implementation.bytecode.Throw;
+package indexWeb;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import indexWeb.services.HandlerDoc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,11 +34,11 @@ public class Node
 
 
 
-    public Node(String address, Session session, Transaction transaction) {
+    public Node(String address, Session session) {
         this.path = address;
         child = new ArrayList<>();
            try {
-               makeChildren(session, transaction);
+               makeChildren(session);
            }catch (Exception ex){
                ex.printStackTrace();
            }
@@ -47,7 +48,7 @@ public class Node
 
 
 
-    private void makeChildren (Session session, Transaction transaction){
+    private void makeChildren (Session session){
         System.out.println(path);
         Document doc = null;
         try {
@@ -65,29 +66,14 @@ public class Node
             responseStatus = ((HttpStatusException) e).getStatusCode();
             loggerNodeNot200.info("Create new node → " + path + " => " + responseStatus);
             e.printStackTrace();
-//            Page page = new Page();//Необходимо записывать страницу, но только страницу без текса
+//            indexWeb.dao.Page page = new indexWeb.dao.Page();//Необходимо записывать страницу, но только страницу без текса
             return;
         }
         responseStatus = doc.connection().response().statusCode();
         loggerNewNode.info("Create new node → " + path + " => " + responseStatus);
         HandlerDoc handlerDoc = new HandlerDoc(doc, responseStatus);
-        handlerDoc.createPage(session, transaction);
+        handlerDoc.createPage(session);
 
-
-
-
-//        if (responseStatus != 200){//TODO записать страницу код ответа, но не вытаскивать из дока больше ничего
-//            System.out.println("++++++++++++++++>>>>>>>>>>>>>>>>>" + " → " + path + "  " + responseStatus);
-//            loggerNodeNot200.info("Create new node → " + path + " => " + responseStatus);
-//            return;
-//        }
-//        if (doc == null){
-//            System.out.println("++++++++++++++++>>>>>>>>>>>>>>>>>" + " → " + path + "  " + responseStatus);
-//            loggerNodeNot200.info("Create new node → " + path + " => " + responseStatus);
-//            throw new NullPointerException("Пустая страница");
-//        }
-
-//        staticAttribute.info("create new page for doc → " + doc.location());
 
 
         Elements elements = doc.select("a");
@@ -101,27 +87,11 @@ public class Node
                     listRefs.add(ref);//TODO Надо ли добавлять до проверки, того, что адрес существует
                     String absoluteAddress = PATH_TO_ROOT_PAGE + ref;
                     child.add(absoluteAddress);
-
-
-
-//                    if (isExistAddress(absoluteAddress)){
-//                        continue;
-//                    }
-
-//                    makeChildren(absoluteAddress);
-//                    Runnable task = () -> {
-//                        try {
-//                            makeChildren(absoluteAddress);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    };
-//                    Thread thread = new Thread(task);
-//                    thread.start();
                 }
             }
         }
     }
+
 
 
     public String getPath() {
@@ -136,3 +106,4 @@ public class Node
         this.child = childAddress;
     }
 }
+

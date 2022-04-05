@@ -1,5 +1,8 @@
+package indexWeb;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import utilitsForProgram.HibernateSessionFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +14,8 @@ public class GetAllRefers extends RecursiveAction {
     private Transaction transaction;
 
     public GetAllRefers(String path) {
-        session = SessionFactory.getSession().openSession();
-        transaction = session.beginTransaction();
-        this.node = new Node(path, session, transaction);
+        session = HibernateSessionFactory.getSession().openSession();
+        this.node = new Node(path, session);
     }
 
     @Override
@@ -22,9 +24,9 @@ public class GetAllRefers extends RecursiveAction {
         for(String child : node.getChild()) {
             GetAllRefers task = new GetAllRefers(child);
             subTasks.add(task);
-            task.fork(); // запустим асинхронно
+            task.fork();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

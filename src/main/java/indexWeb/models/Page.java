@@ -1,6 +1,6 @@
+package indexWeb.models;
+
 import javax.persistence.*;
-import javax.swing.text.html.HTML;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Table(name = "page")
@@ -14,8 +14,10 @@ public class Page
     private String path;
     @Column(nullable = false)
     private int code;
-    @Column(name = "medium_text", length = 1111111, nullable = false)
-    private String mediumText;
+    @Column(name = " content", columnDefinition = "MEDIUMTEXT", nullable = false)
+    private String content;
+
+
 
     public Page() {
     }
@@ -23,6 +25,9 @@ public class Page
     public String getPath() {
         return path;
     }
+
+
+
 
 
     public int getId() {
@@ -41,11 +46,19 @@ public class Page
         this.code = code;
     }
 
-    public String getMediumText() {
-        return mediumText;
+    public String getContent() {
+        return content;
     }
 
-    public void setMediumText(String mediumText) {
-        this.mediumText = mediumText;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "indexWeb.dao.Page{" +
+                "id= " + id +
+                ", path='" + path + '\'' +
+                '}';
     }
 }

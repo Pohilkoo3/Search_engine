@@ -1,3 +1,5 @@
+package indexWeb.models;
+
 import javax.persistence.*;
 
 @Entity
@@ -43,9 +45,10 @@ public class Lemma
         this.frequency = frequency;
     }
 
+
     @Override
     public String toString() {
-        return "Lemma{" +
+        return "indexWeb.dao.Lemma{" +
                 "id=" + id +
                 ", lemma='" + lemma + '\'' +
                 ", frequency=" + frequency +
