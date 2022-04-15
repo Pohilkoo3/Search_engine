@@ -14,23 +14,31 @@ public class Lemmatizator
     private static final Pattern pattern = Pattern.compile(regex);
     private static LuceneMorphology luceneMorph;
 
-
-    public static List<String> getLemmas(String someText) {
-        
+    static {
         try {
             luceneMorph = new RussianLuceneMorphology();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static List<String> getLemmas(String someText) {
+        if (luceneMorph == null){
+            try {
+                luceneMorph = new RussianLuceneMorphology();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         List<String> resultListLemmas = new ArrayList<>();
         String[] textString = someText.split("\n");
         for (String textEveryString : textString) {
-        String[] arrayWords = textEveryString.split(" ");
+            String textWithoutSymbols = textEveryString.replaceAll("[^А-я]", " ");
+        String[] arrayWords = textWithoutSymbols.split(" ");
         List<String> stringListWords = Arrays.stream(arrayWords)
-                .filter(e -> !e.contains("-"))
-                .map(e -> e.replaceAll("[^А-я]", "")
-                        .toLowerCase(Locale.ROOT).trim())
                 .filter(e -> !e.isBlank())
+                .map(e -> e.trim().toLowerCase(Locale.ROOT).trim())
                 .collect(Collectors.toList());
 
         for (String word : stringListWords) {
@@ -58,7 +66,5 @@ public class Lemmatizator
         }
     return luceneMorph.getMorphInfo(word);
     }
-
-
 
 }

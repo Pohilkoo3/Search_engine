@@ -4,14 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "lemma")
-
 public class Lemma
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 255, nullable = false)
+    @Column(length = 200, nullable = false)
     private String lemma;
 
     @Column(updatable = true, nullable = false)
@@ -54,4 +52,5 @@ public class Lemma
                 ", frequency=" + frequency +
                 '}';
     }
+
 }

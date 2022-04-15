@@ -1,5 +1,4 @@
 package indexWeb.models;
-
 import javax.persistence.*;
 
 @Entity
@@ -7,17 +6,14 @@ import javax.persistence.*;
 public class Page
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(length = 230, nullable = false)
     private String path;
     @Column(nullable = false)
     private int code;
     @Column(name = " content", columnDefinition = "MEDIUMTEXT", nullable = false)
     private String content;
-
-
 
     public Page() {
     }
@@ -25,10 +21,6 @@ public class Page
     public String getPath() {
         return path;
     }
-
-
-
-
 
     public int getId() {
         return id;
@@ -61,4 +53,9 @@ public class Page
                 ", path='" + path + '\'' +
                 '}';
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

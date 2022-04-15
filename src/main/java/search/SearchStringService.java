@@ -1,5 +1,4 @@
 package search;
-
 import indexWeb.models.IndexSearch;
 import indexWeb.models.Lemma;
 import indexWeb.models.Page;
@@ -8,8 +7,6 @@ import org.hibernate.Session;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import utilitsForProgram.HibernateSessionFactory;
-
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,17 +23,19 @@ public class SearchStringService {
 
 
     public SearchStringService(String request) {
-
         lemmaInRequest = new ArrayList<>();
         listResultPageId = new ArrayList<>();
         displayPages = new ArrayList<>();
         sessionInit();
         List<Lemma> list = getSortedListLemmas(Lemmatizator.getLemmas(request));
+        if (list.size()==0){//TODO сделать вывод о том что пусто
+            System.out.println("Ничего нет.");
+            return;
+        }
         getUniquePageForStringSearch(list);
         getDisplayPages();
         getSnippet();
-
-        session.close();         /** Смотреть внимательно. Здесь закрываю сессию после обработки **/
+        session.close();
 
     }
 
@@ -89,7 +88,6 @@ public class SearchStringService {
     private void sessionInit() {
         org.hibernate.SessionFactory sessionFactory = HibernateSessionFactory.getSession();
        session = sessionFactory.openSession();
-
     }
 
      public Lemma getLemmaByNameHQL(String name) {
@@ -114,7 +112,7 @@ public class SearchStringService {
         }
         return result.get(result.size()-1);
     }
-    private static String markText(String text, String wordReplace){    //TODO может билдер использовать
+    private static String markText(String text, String wordReplace){
         String word2 = wordReplace.substring(0,1)
                 .toUpperCase(Locale.ROOT)
                 + wordReplace.substring(1);

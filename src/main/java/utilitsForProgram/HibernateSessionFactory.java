@@ -11,14 +11,17 @@ public class HibernateSessionFactory {
 
         public HibernateSessionFactory() {}
 
-        public static org.hibernate.SessionFactory getSession(){
-
-            StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-            Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
-            sessionFactory = metadata.getSessionFactoryBuilder().build();
-
+        public static org.hibernate.SessionFactory getSession() {
+            if (sessionFactory == null) {
+                try {
+                    StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+                    Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+                    sessionFactory = metadata.getSessionFactoryBuilder().build();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
             return sessionFactory;
         }
-
 
 }

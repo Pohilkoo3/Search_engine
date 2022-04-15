@@ -15,7 +15,6 @@ public class DisplayPage
     private String content;
 
     public DisplayPage(int idPage, String path, String title) {
-
         this.idPage = idPage;
         this.uri = path;
         this.title = title;
@@ -78,6 +77,7 @@ public class DisplayPage
         this.relevance = relevance;
     }
     public static int compareByRelevance(DisplayPage dp1, DisplayPage dp2) {
+
         return dp1.getRelevance() > dp2.getRelevance() ? -1 : (dp1.getRelevance() == dp2.getRelevance() ? 0 : 1);
     }
 

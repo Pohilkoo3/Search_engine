@@ -1,8 +1,5 @@
 package indexWeb;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import utilitsForProgram.HibernateSessionFactory;
+import indexWeb.models.Node;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,12 +7,10 @@ import java.util.concurrent.RecursiveAction;
 
 public class GetAllRefers extends RecursiveAction {
     private Node node;
-    private Session session;
-    private Transaction transaction;
+
 
     public GetAllRefers(String path) {
-        session = HibernateSessionFactory.getSession().openSession();
-        this.node = new Node(path, session);
+        this.node = new Node(path);
     }
 
     @Override
@@ -25,11 +20,11 @@ public class GetAllRefers extends RecursiveAction {
             GetAllRefers task = new GetAllRefers(child);
             subTasks.add(task);
             task.fork();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
         }
         for (GetAllRefers task : subTasks) {
